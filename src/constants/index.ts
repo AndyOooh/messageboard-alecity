@@ -2,7 +2,7 @@ import { FiatCurrency } from '@yodlpay/yapp-sdk';
 import { Address } from 'viem';
 
 export * from './tag';
-  
+
 // Configure the payment details for posting
 // - currency: The currency in which fees are charged (USD, EUR, etc.)
 // - amount: The cost per post in the specified currency
@@ -30,7 +30,8 @@ export const PARENT_URL =
     : 'https://dapp-git-sb-add-user-context-request-yodl.vercel.app';
 
 // The title of your message board that appears on the homepage
-export const BOARD_TITLE = 'YodlBoard';
+export const BOARD_TITLE = 'Alecity Posts';
+export const BOARD_SUB_TITLE = 'Community Message Board';
 
 // The color of the accent color for your message board
 export const ACCENT_COLOR = 'gray';
