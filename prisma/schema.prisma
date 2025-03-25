@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Post model
+model Post {
+  id             Int      @id @default(autoincrement())
+  creatorEns     String?  @map("creator_ens") // ENS of the poster - now optional
+  creatorAddress String   @map("creator_address") // Ethereum address of the poster
+  header         String   @db.VarChar(100) // Max 100 chars
+  content        String   @db.VarChar(280) // Max 280 chars
+  txHash         String?  @unique @map("tx_hash") // Ethereum tx hash - now nullable
+  paid           Boolean  @default(false)
+  tags           String[] // Array of tags
+  upvotes        Int      @default(0)
+  downvotes      Int      @default(0)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  comments Comment[]
+  votes    Vote[]
+
+  @@index([creatorAddress])
+  @@index([tags])
+  @@index([createdAt])
+}
+
+// Comment model
+model Comment {
+  id             Int      @id @default(autoincrement())
+  postId         Int      @map("post_id")
+  creatorEns     String?  @map("creator_ens") // ENS of the commenter
+  creatorAddress String   @map("creator_address") // Ethereum address of the commenter
+  content        String   @db.VarChar(280) // Max 280 chars
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at")
+
+  // Relations
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+  @@index([creatorAddress])
+}
+
+// Vote model
+model Vote {
+  id        Int      @id @default(autoincrement())
+  postId    Int      @map("post_id")
+  voterEns  String   @map("voter_ens") // ENS of the voter
+  voteType  String   @map("vote_type") @db.VarChar(4) // 'up' or 'down'
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, voterEns])
+  @@index([postId])
+}
