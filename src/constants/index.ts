@@ -10,7 +10,7 @@ export * from './tag';
 export const POST_FEE = {
   currency: FiatCurrency.USD,
   amount: 0.01,
-  address: '0x5A3598303ab723E557F577d40739062abD79d166' as Address, // community.yodl.eth.
+  address: '0xDC3Cac69C81161ab8Fea6AB84fE90a7ECa43912A' as Address, // alecity.eth.
 };
 
 // The URL where your Yapp is hosted
@@ -18,10 +18,10 @@ export const POST_FEE = {
 export const YAPP_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://messageboard-yapp.vercel.app';
+    : 'https://messageboard-alecity.vercel.app/';
 
 // The ENS name for your Yapp (required for Yodl integration)
-export const YAPP_ENS_NAME = 'messageboard-yapp.yodl.eth';
+export const YAPP_ENS_NAME = 'messageboard.alecity.eth';
 
 // The parent URL of the Yodl super app that will embed this Yapp
 export const PARENT_URL =
