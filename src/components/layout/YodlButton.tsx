@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { MdOutlinePersonOff, MdOutlinePersonOutline } from 'react-icons/md';
 import { FaTwitter, FaGithub } from 'react-icons/fa';
 import { useUserContext } from '@/providers/UserContextProvider';
+import { truncateAddress } from '@/lib/utils';
 
 const socials = [
   {
@@ -69,7 +70,7 @@ export const YodlButton = () => {
                 <DropdownMenu.Label>Community</DropdownMenu.Label>
                 <DropdownMenu.Item>
                   Address:
-                  <Code>{userContext.community.address}</Code>
+                  <Code>{truncateAddress(userContext.community.address)}</Code>
                 </DropdownMenu.Item>
                 <DropdownMenu.Item>
                   Name:
