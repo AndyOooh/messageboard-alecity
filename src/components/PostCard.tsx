@@ -11,6 +11,7 @@ import { ACCENT_COLOR, TAGS } from '@/constants';
 import { MdChatBubbleOutline, MdOutlineThumbDown, MdOutlineThumbUp } from 'react-icons/md';
 import { truncateAddress } from '@/lib/utils';
 import { PersonIcon } from '@radix-ui/react-icons';
+import { useUserContext } from '@/providers/UserContextProvider';
 
 type PostCardProps = {
   post: PostExtended;
@@ -20,17 +21,18 @@ export default function PostCard({ post: initialPost }: PostCardProps) {
   const [post, setPost] = useState(initialPost);
   const { mutate: vote, isPending } = useVote();
   const [showComments, setShowComments] = useState(false);
-  const [currentUserEns] = useState('demo.eth'); // Replace with actual user ENS
+  const { userContext, isLoading } = useUserContext();
 
-  const userVote = post.votes?.find((v) => v.voterEns === currentUserEns);
+  const userVote = post.votes?.find((v) => v.voterEns === userContext?.primaryEnsName);
 
   const handleVote = (voteType: 'up' | 'down') => {
+    if (!userContext?.primaryEnsName) return;
     if (isPending) return;
 
     vote(
       {
         postId: post.id,
-        voterEns: currentUserEns,
+        voterEns: userContext?.primaryEnsName,
         voteType,
       },
       {
