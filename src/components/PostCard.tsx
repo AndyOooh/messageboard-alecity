@@ -25,9 +25,10 @@ export default function PostCard({ post: initialPost }: PostCardProps) {
 
   const userVote = post.votes?.find((v) => v.voterEns === userContext?.primaryEnsName);
 
+  const isVotingDisabled = isPending || isLoading || !userContext?.primaryEnsName;
+
   const handleVote = (voteType: 'up' | 'down') => {
-    if (!userContext?.primaryEnsName) return;
-    if (isPending) return;
+    if (isPending || isLoading || !userContext?.primaryEnsName) return;
 
     vote(
       {
@@ -81,7 +82,7 @@ export default function PostCard({ post: initialPost }: PostCardProps) {
               variant="ghost"
               onClick={() => handleVote('up')}
               color={userVote?.voteType === 'up' ? 'green' : 'gray'}
-              disabled={isPending}
+              disabled={isVotingDisabled}
             >
               <MdOutlineThumbUp />
               {post.upvotes}
@@ -90,7 +91,7 @@ export default function PostCard({ post: initialPost }: PostCardProps) {
               variant="ghost"
               onClick={() => handleVote('down')}
               color={userVote?.voteType === 'down' ? 'red' : 'gray'}
-              disabled={isPending}
+              disabled={isVotingDisabled}
             >
               <MdOutlineThumbDown />
               {post.downvotes}
