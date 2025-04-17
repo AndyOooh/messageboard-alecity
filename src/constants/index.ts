@@ -26,7 +26,7 @@ export const YAPP_ENS_NAME = 'messageboard.alecity.eth';
 // The parent URL of the Yodl super app that will embed this Yapp
 export const PARENT_URL =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3001'
+    ? 'http://localhost:3000'
     : 'https://yodl.me';
 
 // The title of your message board that appears on the homepage
