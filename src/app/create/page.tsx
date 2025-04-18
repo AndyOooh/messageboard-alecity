@@ -71,7 +71,8 @@ export default function CreatePostPage() {
       const newPost = await create.mutateAsync(postData);
 
       // Step 2: Request payment with the post ID
-      const { txHash } = await sdk.requestPayment(POST_FEE.address, {
+      const { txHash } = await sdk.requestPayment({
+        addressOrEns: POST_FEE.address,
         amount: POST_FEE.amount,
         currency: POST_FEE.currency,
         memo: newPost.id.toString(),
