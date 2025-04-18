@@ -10,6 +10,9 @@ import { TanStackProvider } from '@/providers/TanStackProvider';
 import { ThemeProvider as NextThemeProvider } from 'next-themes';
 import { BackgroundWrapper } from '@/components/layout/BackgroundProvider';
 import { UserContextProvider } from '@/providers/UserContextProvider';
+import { SessionProvider } from '@/providers/SessionProvider';
+import { SessionGuard } from '@/providers/SessionGuard';
+import { getServerAuthSession } from '@/lib/auth';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,32 +29,37 @@ export const metadata: Metadata = {
   description: 'Message Board Yapp',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerAuthSession();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <TanStackProvider>
-          <UserContextProvider>
-            <NextThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              <Theme
-                accentColor={ACCENT_COLOR}
-                hasBackground={false}
-                panelBackground="translucent"
-                radius="large"
-              >
-                <BackgroundWrapper>
-                  <ToastProvider>
-                    <AppLayout>{children}</AppLayout>
-                  </ToastProvider>
-                </BackgroundWrapper>
-              </Theme>
-            </NextThemeProvider>
-          </UserContextProvider>
-        </TanStackProvider>
+        <SessionProvider session={session}>
+          <TanStackProvider>
+            <UserContextProvider>
+              <SessionGuard />
+              <NextThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                <Theme
+                  accentColor={ACCENT_COLOR}
+                  hasBackground={false}
+                  panelBackground="translucent"
+                  radius="large"
+                >
+                  <BackgroundWrapper>
+                    <ToastProvider>
+                      <AppLayout>{children}</AppLayout>
+                    </ToastProvider>
+                  </BackgroundWrapper>
+                </Theme>
+              </NextThemeProvider>
+            </UserContextProvider>
+          </TanStackProvider>
+        </SessionProvider>
       </body>
     </html>
   );

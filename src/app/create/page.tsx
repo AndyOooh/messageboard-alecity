@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  Box,
+  Box,  
   Button,
   Flex,
   Heading,
@@ -72,12 +72,14 @@ export default function CreatePostPage() {
 
       // Step 2: Request payment with the post ID
       const { txHash } = await sdk.requestPayment({
-        addressOrEns: POST_FEE.address,
+        addressOrEns: POST_FEE.receiverEns,
         amount: POST_FEE.amount,
         currency: POST_FEE.currency,
         memo: newPost.id.toString(),
       });
       setPaymentStatus('verifying');
+
+      // TODO: update creatorEns, creatorAddress with verified userInfo from SIWE? Or from payment. Either way, this should be done server side.
 
       await update.mutateAsync({
         id: newPost.id,
@@ -190,7 +192,7 @@ export default function CreatePostPage() {
                   disabled={!userContext || paymentStatus !== null || !isFormValid()}
                 >
                   {paymentStatus === 'submitting'
-                    ? 'Subimitting...'
+                    ? 'Submitting...'
                     : paymentStatus === 'verifying'
                     ? 'Verifying...'
                     : 'Create Post'}

@@ -2,8 +2,8 @@ import { Flex, IconButton, Link } from '@radix-ui/themes';
 import { PlusIcon } from '@radix-ui/react-icons';
 import NextLink from 'next/link';
 import Image from 'next/image';
-import { YodlButton } from './YodlButton';
 import { ThemeToggle } from '../ui/ThemeToggle';
+import { RightHeaderButton } from '../RightHeaderButton';
 
 export function Header() {
   return (
@@ -20,7 +20,7 @@ export function Header() {
             <PlusIcon />
           </IconButton>
         </NextLink>
-        <YodlButton />
+        <RightHeaderButton />
       </Flex>
     </Flex>
   );
