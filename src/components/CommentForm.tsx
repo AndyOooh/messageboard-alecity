@@ -16,7 +16,7 @@ export default function CommentForm({ postId, hasComments = false }: CommentForm
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const { create } = useCommentMutations();
-  const { userContext } = useUserContext();
+  const { data: userContext } = useUserContext();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

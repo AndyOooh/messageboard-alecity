@@ -24,7 +24,7 @@ import { Address } from 'viem';
 export default function CreatePostPage() {
   const router = useRouter();
   const toast = useToast();
-  const { userContext, isLoading } = useUserContext();
+  const { data: userContext, isLoading } = useUserContext();
   const { create, update } = usePostMutations();
   const [paymentStatus, setPaymentStatus] = useState<'submitting' | 'verifying' | null>(null);
   const [formData, setFormData] = useState({
