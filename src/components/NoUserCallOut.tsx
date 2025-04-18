@@ -5,7 +5,7 @@ import { InfoCircledIcon } from '@radix-ui/react-icons';
 import { Callout, Flex } from '@radix-ui/themes';
 
 export const NoTokenCallOut = () => {
-  const { userContext, isLoading } = useUserContext();
+  const { data: userContext, isLoading } = useUserContext();
 
   if (userContext || isLoading) return null;
 

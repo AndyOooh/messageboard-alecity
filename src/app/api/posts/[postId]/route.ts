@@ -41,7 +41,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     console.log('🚀 payment:', payment);
     const post = await PostService.getById(postIdInt);
 
-    const isValidPayment = verifyPayment(payment, POST_FEE.address, post);
+    const isValidPayment = verifyPayment(payment, POST_FEE.receiverAddress, post);
 
     if (!isValidPayment) {
       return NextResponse.json({ error: 'Invalid payment' }, { status: 400 });

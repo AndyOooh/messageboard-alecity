@@ -21,7 +21,7 @@ export default function PostCard({ post: initialPost }: PostCardProps) {
   const [post, setPost] = useState(initialPost);
   const { mutate: vote, isPending } = useVote();
   const [showComments, setShowComments] = useState(false);
-  const { userContext, isLoading } = useUserContext();
+  const { data: userContext, isLoading } = useUserContext();
 
   const userVote = post.votes?.find((v) => v.voterEns === userContext?.primaryEnsName);
 
